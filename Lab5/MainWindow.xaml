@@ -27,9 +27,9 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <TextBox Name="Namn" Margin="0,5,5,0" Padding="2" Grid.Row="0" Grid.Column="1" TextChanged="Namn_TextChanged"/>
+                <TextBox Name="Namn" Margin="0,5,5,0" Padding="2" Grid.Row="0" Grid.Column="1" PreviewTextInput="Namn_PreviewTextInput" TextChanged="Namn_TextChanged"/>
                 <TextBlock Text="Namn"  FontWeight="Bold" Padding="0,10,0,0" Grid.Row="0" Grid.Column="0" FontFamily="Gadugi" Height="27" VerticalAlignment="Top"/>
-                <TextBox Name="Mail" Margin="0,5,5,0" Padding="2" Grid.Row="1" Grid.Column="1"/>
+                <TextBox Name="Mail" Margin="0,5,5,0" Padding="2" Grid.Row="1" Grid.Column="1" TextChanged="Mail_TextChanged"/>
                 <TextBlock Text="Mail" FontWeight="Bold" Padding="0,10,0,0" Grid.Row="1" Grid.Column="0" FontFamily="Gadugi"/>
                 
                 <Button x:Name="AddUser" Click="AddUser_Click" Margin="0,5,0,0" Grid.Column="2" Grid.Row="0" Content="Lägg till" FontFamily="Gadugi" IsEnabled="False"/>

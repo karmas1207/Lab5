@@ -40,7 +40,7 @@ namespace Lab5
         {
             if (AddUser.IsEnabled == true)
             {
-                if (Namn.Text == null)
+                if (Namn.Text == "" || Mail.Text == "")
                 {
 
                 }
@@ -49,6 +49,7 @@ namespace Lab5
                     users.Add(new User() { Name = Namn.Text, Mail = Mail.Text });
                     Namn.Clear();
                     Mail.Clear();
+                    AddUser.IsEnabled = false;
                 }
             }
         }
@@ -106,6 +107,7 @@ namespace Lab5
             Namn.Clear();
             Mail.Clear();
             userSelected = true;
+            adminSelected = false;
             if (Users.SelectedIndex > -1)
             {
                 var user = users[Users.SelectedIndex];
@@ -113,8 +115,7 @@ namespace Lab5
                 Mail.Text = user.Mail;
                 RemoveUser.IsEnabled = true;
                 ChangeUser.IsEnabled = true;
-                AddUser.IsEnabled = true;
-
+                AddUser.IsEnabled = false;
             }
         }
 
@@ -123,6 +124,7 @@ namespace Lab5
             Namn.Clear();
             Mail.Clear();
             adminSelected = true;
+            userSelected = false;
             if (Admins.SelectedIndex > -1)
             {
                 var admin = admins[Admins.SelectedIndex];
@@ -130,8 +132,7 @@ namespace Lab5
                 Mail.Text = admin.Mail;
                 RemoveUser.IsEnabled = true;
                 ChangeUser.IsEnabled = true;
-                AddUser.IsEnabled = true;
-
+                AddUser.IsEnabled = false;
             }
         }
 
@@ -150,7 +151,7 @@ namespace Lab5
             {
                 if (Admins.SelectedIndex > -1)
                 {
-                    admins.Add(new Admin { Name = Namn.Text, Mail = Mail.Text });
+                    admins.Add(new User { Name = Namn.Text, Mail = Mail.Text });
                     admins.RemoveAt(Admins.SelectedIndex);
                 }
             }
@@ -159,47 +160,25 @@ namespace Lab5
                 
             }
         }
-        string nyText = string.Empty;
+       
+        private void Namn_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!System.Text.RegularExpressions.Regex.IsMatch(e.Text, "^[a-zA-Z]"))
+            {
+                e.Handled = true;
+                AddUser.IsEnabled = true;
+            }
+        }
+
         private void Namn_TextChanged(object sender, TextChangedEventArgs e)
-        {                    
-                if (Namn.Text.All(chr => char.IsLetter(chr)) || Namn.Text.All(chr => char.IsWhiteSpace(chr)))
-                {
-                    nyText = Namn.Text;
-                    Namn.Text = nyText;
-                }                
-                else
-                {
-                    Namn.Text = nyText;
-                }
-                Namn.SelectionStart = Namn.Text.Length;
+        {
             AddUser.IsEnabled = true;
         }
 
-
-        //{
-        //    AddUser.IsEnabled = true;
-        //
-        //    if (Namn.Text.All(chr => char.IsLetter(chr)))
-        //
-        //        if (!System.Text.RegularExpressions.Regex.IsMatch(Namn.Text, "^[a-zA-Z]"))
-        //    {
-        //        System.Windows.MessageBox.Show("This textbox accepts only alphabetical characters");
-        //        Namn.Text.Remove(Namn.Text.Length - 1);
-        //    }
-        //}
-
-        
-
-        // private void Namn_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
-        // {
-        //     if (System.Text.RegularExpressions.Regex.IsMatch(Namn.Text, "^[a-zA-Z]"))
-        //     {
-        //         e.Handled = true;
-        //     } else
-        //     {
-        // 
-        //     }
-        // }
+        private void Mail_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            AddUser.IsEnabled = true;
+        }
     }
 
     public class Admin : User
